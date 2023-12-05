@@ -1,0 +1,13 @@
+{
+  "name": "qrng_example_foundry",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/billyjitsu/qrng_example_foundry.git",
+  "author": "billyjitsu <82428978+billyjitsu@users.noreply.github.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@api3/airnode-admin": "^0.13.0",
+    "dotenv": "^16.3.1",
+    "ethers": "^6.9.0"
+  }
+}
