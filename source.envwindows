@@ -15,3 +15,5 @@ Get-Content .env | ForEach-Object {
     }
     [System.Environment]::SetEnvironmentVariable($envName, $envValue, [System.EnvironmentVariableTarget]::Process)
 }
+
+\\ copy and paste this in windows terminal

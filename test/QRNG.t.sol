@@ -15,7 +15,6 @@ contract QRNGTest is Test {
     using ECDSA for bytes32;
 
     //Global variables for our test
-    //(address airnode, uint256 airnodePrivateKey) = makeAddrAndKey("airnode");
     address airnode = makeAddr("airnode");
     bytes32 endpointIdUint256 = keccak256(abi.encodePacked(("endpointIdUint256")));
     bytes32 endpointIdUint256Array = keccak256(abi.encodePacked(("endpointIdUint256Array")));
@@ -39,6 +38,7 @@ contract QRNGTest is Test {
         // starting Prank ALL subsequent calls will come from msg.sender
         vm.startPrank(msg.sender);
         qrng.setRequestParameters(airnode, endpointIdUint256, endpointIdUint256Array, sponsorWallet);
+        vm.stopPrank();
     }
 
     function testMakeRequestUint256() public {
