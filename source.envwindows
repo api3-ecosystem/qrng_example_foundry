@@ -1,0 +1,17 @@
+Get-Content .env | ForEach-Object {
+    if ([string]::IsNullOrWhiteSpace($_)) {
+        return
+    }
+    $keyValue = $_ -split '=', 2
+    if ($keyValue.Count -ne 2) {
+        Write-Host "Skipping invalid line: $_"
+        return
+    }
+    $envName = $keyValue[0].Trim()
+    $envValue = $keyValue[1].Trim()
+    if ([string]::IsNullOrEmpty($envName)) {
+        Write-Host "Environment variable name cannot be empty."
+        return
+    }
+    [System.Environment]::SetEnvironmentVariable($envName, $envValue, [System.EnvironmentVariableTarget]::Process)
+}
