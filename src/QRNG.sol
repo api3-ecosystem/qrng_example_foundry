@@ -74,7 +74,7 @@ contract Qrng is RrpRequesterV0, Ownable {
 
     /// @notice Requests a `uint256[]`
     /// @param size Size of the requested array
-    function makeRequestUint256Array(uint256 size) external {
+    function makeRequestUint256Array(uint256 size) external returns (bytes32){
         bytes32 requestId = airnodeRrp.makeFullRequest(
             airnode,
             endpointIdUint256Array,
@@ -87,6 +87,7 @@ contract Qrng is RrpRequesterV0, Ownable {
         );
         expectingRequestWithIdToBeFulfilled[requestId] = true;
         emit RequestedUint256Array(requestId, size);
+        return requestId;
     }
 
     /// @notice Called by the Airnode through the AirnodeRrp contract to

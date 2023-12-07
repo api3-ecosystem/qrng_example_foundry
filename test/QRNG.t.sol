@@ -43,6 +43,7 @@ contract QRNGTest is Test {
         vm.stopPrank();
     }
 
+    /* Single Random Number Tests */
     function testMakeRequestUint256() public {
 
         vm.startPrank(msg.sender);
@@ -98,4 +99,68 @@ contract QRNGTest is Test {
         vm.stopPrank();
         console.log("returnedNumber: ", returnedNumber);
     }
+
+
+    /* Testing multiple random number requests */
+    function testMakeRequestUint256Array() public {
+
+        vm.startPrank(msg.sender);
+        qrng.setRequestParameters(airnode, endpointIdUint256, endpointIdUint256Array, sponsorWallet);
+        vm.stopPrank();
+
+        //uint256 blockNumberToReset = block.number;
+        vm.startPrank(address(qrng), address(qrng));
+        //Request 3 randome numbers
+        bytes32 requestId = qrng.makeRequestUint256Array(3);
+
+        // vm.rollFork(blockNumberToReset);
+        // bytes32 expectedRequestId = airnodeRrp.makeFullRequest(
+        //     airnode, endpointIdUint256, address(qrng), sponsorWallet, address(qrng), qrng.fulfillUint256.selector, ""
+        // );
+        // console.logBytes32(expectedRequestId);
+      //  assertEq(requestId, expectedRequestId);
+    }
+
+    function testfulfillUint256Array() public {
+
+        /* creating a local airnode for this particular test
+           Because of onlyAirnodeRrp modifier on the fulfillUint256 function 
+           Their airnode must be the one that calls and signs the function
+
+           airnode is called airnodelocal to not conflict with the global airnode name
+        */
+        (address airnodelocal, uint256 airnodePrivateKey) = makeAddrAndKey("airnode");
+    
+
+        vm.startPrank(msg.sender);
+        qrng.setRequestParameters(airnodelocal, endpointIdUint256, endpointIdUint256Array, sponsorWallet);
+        vm.stopPrank();
+
+        vm.startPrank(address(qrng));
+        bytes32 requestId = qrng.makeRequestUint256Array(3);
+        vm.stopPrank();
+
+        //sponsor wallet will call the fulfill function
+        vm.startPrank(sponsorWallet);
+        //We are just returning a random number for this test
+        uint256[] memory randomNumbers = new uint256[](3);
+        randomNumbers[0] = 3244353535;
+        randomNumbers[1] = 12345874;
+        randomNumbers[2] = 84672818384;
+        //Building the response
+        bytes memory data = abi.encode(randomNumbers);
+        bytes32 messageHash = keccak256(abi.encodePacked(requestId, data)).toEthSignedMessageHash();
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(airnodePrivateKey, messageHash);
+        bytes memory signature = abi.encodePacked(r, s, v);
+        //Calling the fulfill function via the sponsor wallet without response
+        airnodeRrp.fulfill(requestId, airnodelocal, address(qrng), qrng.fulfillUint256Array.selector, data, signature);
+        vm.stopPrank();
+        vm.startPrank(msg.sender);
+        uint256[] memory returnedNumber = qrng.getRandomNumberArray();
+        vm.stopPrank();
+        for(uint i = 0; i < returnedNumber.length; i++){
+            console.log("returnedNumber: ", returnedNumber[i]);
+        }
+    }
+
 }
