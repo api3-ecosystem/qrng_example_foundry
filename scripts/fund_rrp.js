@@ -15,7 +15,7 @@ async function main() {
   const airnodeAddress = "0x6238772544f029ecaBfDED4300f13A3c4FE84E1D";
   const airnodeXpub = "xpub6CuDdF9zdWTRuGybJPuZUGnU4suZowMmgu15bjFZT2o6PUtk4Lo78KGJUGBobz3pPKRaN9sLxzj21CMe6StP3zUsd8tWEJPgZBesYBMY7Wo";
   // const yourDeployedContractAddress = "Your Deployed Contract Address here";
-  const yourDeployedContractAddress = "0x11924f1eDcCD4DBf1B7f10Ed80b79177a7643bD7";
+  const yourDeployedContractAddress = "0xce5f4055a1B876e37A4Bdb52BE23cb1dB4eBa0B7";
   const amountInEther = 0.01;
 
   // Connect to a provider (e.g., Infura, Alchemy)
