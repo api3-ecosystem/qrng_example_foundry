@@ -22,8 +22,9 @@ yarn install
    be funded.
 
 ```sh
-PRIVATE_KEY = "YOUR_PRIVATE_KEY"
-PROVIDER_URL = https://rpc.ankr.com/eth_sepolia
+PRIVATE_KEY="YOUR_PRIVATE_KEY"
+PROVIDER_URL=https://rpc.ankr.com/eth_sepolia
+ETHERSCAN_API_KEY="YOUR_ETHERSCAN_API_KEY"
 ```
 
 3. Deploy the contract
@@ -47,7 +48,7 @@ Make sure to update `sponsorWallet` with your previously generated sponsor walle
 Make sure to update `contractAddress` with your deployed contract address
 
 ```sh
-node scripts\request_rrp.js
+node scripts\request_one.js
 ```
 
 or send funds to sponsor wallet address displayed on the terminal manually.

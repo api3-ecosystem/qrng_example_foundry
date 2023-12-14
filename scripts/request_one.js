@@ -10,6 +10,8 @@ async function main() {
   const endPointAddress = "0x94555f83f1addda23fdaa7c74f27ce2b764ed5cc430c66f5ff1bcf39d583da36";
   const endPoint256Address = "0x9877ec98695c139310480b4323b9d474d48ec4595560348a2341218670f7fbc2";
   const SponsorWallet = "0xB4d8d0A0D243e993D6C939a9fdA681b2dbCDc5b9";
+  //const contractAddress = "your_contract_address";
+  const contractAddress = "0xce5f4055a1B876e37A4Bdb52BE23cb1dB4eBa0B7";
 
   // Connect to a provider (e.g., Infura, Alchemy)
   const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_URL);
@@ -19,8 +21,6 @@ async function main() {
 
   // Smart contract ABI and address
   const contractABI = ABI;
-  //const contractAddress = "your_contract_address";
-  const contractAddress = "0xce5f4055a1B876e37A4Bdb52BE23cb1dB4eBa0B7";
 
   // Create a contract instance
   const contract = new ethers.Contract(contractAddress, contractABI, wallet);
